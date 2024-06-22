@@ -1,0 +1,98 @@
+openapi: 3.0.1
+info:
+  title: 個人プロジェクト
+  description: ''
+  version: 1.0.0
+tags: []
+paths:
+  /schema:
+    get:
+      summary: oneOf sample useSchema
+      deprecated: false
+      description: ''
+      tags: []
+      parameters: []
+      responses:
+        '200':
+          description: User information retrieved successfully
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: '#/components/schemas/IndividualUser'
+                  - $ref: '#/components/schemas/CorporateUser'
+        '404':
+          description: User not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+      security: []
+  /normal:
+    get:
+      summary: oneOf sample
+      deprecated: false
+      description: ''
+      tags: []
+      parameters: []
+      responses:
+        '200':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - type: object
+                    additionalProperties: false
+                    properties:
+                      type:
+                        type: string
+                        enum:
+                          - anonymouse
+                      foo:
+                        type: string
+                    required:
+                      - type
+                      - foo
+                  - type: object
+                    additionalProperties: false
+                    properties:
+                      type:
+                        type: string
+                        enum:
+                          - user
+                      bar:
+                        type: string
+                    required:
+                      - type
+                      - bar
+      security: []
+components:
+  schemas:
+    CorporateUser:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+            - Corporate
+        company_name:
+          type: string
+      required:
+        - type
+        - company_name
+    IndividualUser:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+            - Individual
+        nickname:
+          type: string
+      required:
+        - type
+        - nickname
+  securitySchemes: {}
+servers: []
